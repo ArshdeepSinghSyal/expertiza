@@ -26,7 +26,6 @@ module ReviewMappingHelper
   #
   def get_team_colour(response_map)
     assignment_created, assignment_due_dates  = @assignment.created_at, DueDate.where(parent_id: response_map.reviewed_object_id)
-	#assignment_due_dates = DueDate.where(parent_id: response_map.reviewed_object_id)
     if Response.exists?(map_id: response_map.id)
       if !response_map.try(:reviewer).try(:review_grade).nil?
         'brown'
@@ -42,7 +41,6 @@ module ReviewMappingHelper
             if link.nil? or (link !~ %r{https*:\/\/wiki(.*)}) # can be extended for github links in future
               color.push 'green'
             else
-              #link_updated_at = get_link_updated_at(link)
               color.push link_updated_since_last?(round, assignment_due_dates, get_link_updated_at(link)) ? 'purple' : 'green'
             end
           end
